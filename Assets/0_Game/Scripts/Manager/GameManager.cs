@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum GameState { MainMenu, GamePlay, Finish}
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class GameManager : MonoBehaviour
 {
-    
+    public static GameManager ins;
     private static GameState gameState = GameState.MainMenu;
     
     protected void Awake()
     {
+        ins = this;
         Input.multiTouchEnabled = false;
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;

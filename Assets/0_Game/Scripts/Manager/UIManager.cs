@@ -16,20 +16,15 @@ public enum UIID
 }
 
 
-public class UIManager : SingletonMonoBehaviour<UIManager>
+public class UIManager : MonoBehaviour
 {
+    public static UIManager ins;
     private Dictionary<UIID, UICanvas> UICanvas = new Dictionary<UIID, UICanvas>();
     public Transform CanvasParentTF;
 
-    [Header("--------- UICanvas ---------")]
-    public UICanvas[] canvasUIPrefabs;
-
-    private void Start()
+    private void Awake()
     {
-        foreach (UICanvas canvas in canvasUIPrefabs)
-        {
-            UICanvas.Add(canvas.UI_ID, canvas);
-        }
+        ins = this;
     }
 
     #region Canvas
@@ -44,6 +39,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         if (!UICanvas.ContainsKey(ID) || UICanvas[ID] == null)
         {
             UICanvas canvas = Instantiate(Resources.Load<UICanvas>("UI/" + ID.ToString()), CanvasParentTF);
+            canvas.gameObject.SetActive(false);
             UICanvas[ID] = canvas;
         }
 

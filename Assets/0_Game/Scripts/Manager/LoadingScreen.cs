@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class LoadingScreen : SingletonMonoBehaviour<LoadingScreen>
+public class LoadingScreen : MonoBehaviour
 {
+    public static LoadingScreen ins;
     public Image imgProgress;
+
+    private void Awake()
+    {
+        ins = this;
+    }
 
     public void SetPercent(float to, float time)
     {

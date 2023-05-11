@@ -8,11 +8,6 @@ public class DataManager : MonoBehaviour
     public static DataManager ins;
     private void Awake()
     {
-        if (ins != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
         ins = this;
     }
     public bool isLoaded = false;
