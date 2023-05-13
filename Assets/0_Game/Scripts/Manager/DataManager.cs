@@ -9,6 +9,7 @@ public class DataManager : MonoBehaviour
     private void Awake()
     {
         ins = this;
+        DontDestroyOnLoad(gameObject);
     }
     public bool isLoaded = false;
     public PlayerData playerData;

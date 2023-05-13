@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     protected void Awake()
     {
         ins = this;
+        DontDestroyOnLoad(gameObject);
+        
         Input.multiTouchEnabled = false;
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;

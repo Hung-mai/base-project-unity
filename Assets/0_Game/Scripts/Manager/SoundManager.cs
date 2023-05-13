@@ -14,15 +14,8 @@ public partial class SoundManager : MonoBehaviour
 
     void Awake()
     {
-        if (ins == null)
-        {
-            ins = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        ins = this;
+        DontDestroyOnLoad(gameObject);
         backgroundSound = gameObject.AddComponent<AudioSource>();
         efxSound = gameObject.AddComponent<AudioSource>();
     }

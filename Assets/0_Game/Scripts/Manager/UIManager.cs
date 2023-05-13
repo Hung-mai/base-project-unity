@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         ins = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     #region Canvas
