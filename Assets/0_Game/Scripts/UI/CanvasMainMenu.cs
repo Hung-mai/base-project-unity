@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class CanvasMainMenu : UICanvas
 {
-    public void PlayGameButton()
+    public override void Open()
     {
-        UIManager.ins.OpenUI(UIID.UICGamePlay);
-
-        Close();
+        base.Open();
     }
+    
+    public override void Close()
+    {
+        base.Close();
+    }
+
 }

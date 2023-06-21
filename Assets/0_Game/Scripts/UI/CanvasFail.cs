@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class CanvasFail : UICanvas
 {
-    public void CloseButton()
+    public override void Open()
     {
-        UIManager.ins.OpenUI(UIID.UICMainMenu);
-
-        Close();
+        base.Open();
+    }
+    
+    public override void Close()
+    {
+        base.Close();
     }
 }

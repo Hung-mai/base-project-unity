@@ -5,17 +5,13 @@ using UnityEngine.UI;
 
 public class CanvasVictory : UICanvas
 {
-    public Text text;
-
-    public void OnInitData(int data)
+    public override void Open()
     {
-        text.text = data.ToString();
+        base.Open();
     }
-
-    public void CloseButton()
+    
+    public override void Close()
     {
-        UIManager.ins.OpenUI(UIID.UICMainMenu);
-
-        Close();
+        base.Close();
     }
 }

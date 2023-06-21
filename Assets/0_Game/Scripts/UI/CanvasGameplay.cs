@@ -4,22 +4,13 @@ using UnityEngine;
 
 public class CanvasGameplay : UICanvas
 {
-    public void SettingButton()
+    public override void Open()
     {
-        UIManager.ins.OpenUI(UIID.UICSetting);
+        base.Open();
     }
-
-    public void FailButton()
+    
+    public override void Close()
     {
-        UIManager.ins.OpenUI(UIID.UICFail);
-
-        Close();
-    }
-
-    public void VictoryButton()
-    {
-        UIManager.ins.OpenUI<CanvasVictory>(UIID.UICVictory).OnInitData(Random.Range(0, 100));
-
-        Close();
+        base.Close();
     }
 }

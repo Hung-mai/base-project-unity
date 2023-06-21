@@ -83,6 +83,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8632430226372464693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI_ID: 1
   IsDestroyOnClose: 0
+  m_RectTransform: {fileID: 8632430226372464694}
 --- !u!1 &8632430226653029318
 GameObject:
   m_ObjectHideFlags: 0

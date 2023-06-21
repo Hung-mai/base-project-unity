@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class CanvasSetting : UICanvas
 {
-    public void CloseButton()
+    public override void Open()
     {
-        Close();
+        base.Open();
+    }
+    
+    public override void Close()
+    {
+        base.Close();
     }
 }
