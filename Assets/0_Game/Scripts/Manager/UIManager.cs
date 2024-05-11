@@ -19,8 +19,10 @@ public enum UIID
 public class UIManager : MonoBehaviour
 {
     public static UIManager ins;
-    private Dictionary<UIID, UICanvas> UICanvas = new Dictionary<UIID, UICanvas>();
-    public Transform CanvasParentTF;
+    private Dictionary<System.Type, UICanvas> uiCanvasPrefab = new Dictionary<System.Type, UICanvas>();
+    private UICanvas[] uiResources;
+    private Dictionary<System.Type, UICanvas> uiCanvas = new Dictionary<System.Type, UICanvas>();
+    public RectTransform CanvasParentRTF;
 
     private void Awake()
     {
@@ -30,47 +32,90 @@ public class UIManager : MonoBehaviour
 
     #region Canvas
 
-    public bool IsOpenedUI(UIID ID)
+    public T OpenUI<T>() where T : UICanvas
     {
-        return UICanvas.ContainsKey(ID) && UICanvas[ID] != null && UICanvas[ID].gameObject.activeInHierarchy;
-    }
+        UICanvas canvas = GetUI<T>();
 
-    public UICanvas GetUI(UIID ID)
-    {
-        if (!UICanvas.ContainsKey(ID) || UICanvas[ID] == null)
-        {
-            UICanvas canvas = Instantiate(Resources.Load<UICanvas>("UI/" + ID.ToString()), CanvasParentTF);
-            canvas.gameObject.SetActive(false);
-            UICanvas[ID] = canvas;
-        }
-
-        return UICanvas[ID];
-    } 
-    
-    public T GetUI<T>(UIID ID) where T : UICanvas
-    {
-        return GetUI(ID) as T;
-    }
-
-    public UICanvas OpenUI(UIID ID)
-    {
-        UICanvas canvas = GetUI(ID);
-
-        canvas.Setup();
+        // canvas.Setup();
         canvas.Open();
 
-        return canvas;
-    }  
-    
-    public T OpenUI<T>(UIID ID) where T : UICanvas
-    {
-        return OpenUI(ID) as T;
+        return canvas as T;
     }
 
-    public bool IsOpened(UIID ID)
+    
+    public void CloseUI<T>() where T : UICanvas
     {
-        return UICanvas.ContainsKey(ID) && UICanvas[ID] != null;
+        if (IsOpened<T>())
+        {
+            GetUI<T>().Close();
+        }
     }
+
+
+    public void CloseUI<T>(float delayTime) where T : UICanvas
+    {
+        if (IsOpened<T>())
+        {
+            GetUI<T>().Close(delayTime);
+        }
+    }
+ 
+    
+    public bool IsOpened<T>() where T : UICanvas
+    {
+        return IsLoaded<T>() && uiCanvas[typeof(T)].gameObject.activeInHierarchy;
+    }
+
+    public bool IsLoaded<T>() where T : UICanvas
+    {
+        System.Type type = typeof(T);
+        return uiCanvas.ContainsKey(type) && uiCanvas[type] != null;
+    }
+
+    public T GetUI<T>() where T : UICanvas
+    {
+        if (!IsLoaded<T>())
+        {
+            UICanvas canvas = Instantiate(GetUIPrefab<T>(), CanvasParentRTF);
+            uiCanvas[typeof(T)] = canvas;
+        }
+
+        return uiCanvas[typeof(T)] as T;
+    }
+
+    public void CloseAll()
+    {
+        foreach (var item in uiCanvas)
+        {
+            if (item.Value != null && item.Value.gameObject.activeInHierarchy)
+            {
+                item.Value.Close();
+            }
+        }
+    }
+
+    private T GetUIPrefab<T>() where T : UICanvas
+    {
+        if (!uiCanvasPrefab.ContainsKey(typeof(T)))
+        {
+            if (uiResources == null)
+            {
+                uiResources = Resources.LoadAll<UICanvas>("UI/");
+            }
+
+            for (int i = 0; i < uiResources.Length; i++)
+            {
+                if (uiResources[i] is T)
+                {
+                    uiCanvasPrefab[typeof(T)] = uiResources[i];
+                    break;
+                }
+            }
+        }
+
+        return uiCanvasPrefab[typeof(T)] as T;
+    }
+
 
     #endregion
 
@@ -130,13 +175,5 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
-
-    public void CloseUI(UIID ID)
-    {
-        if (IsOpened(ID))
-        {
-            GetUI(ID).Close();
-        }
-    }
 
 }
