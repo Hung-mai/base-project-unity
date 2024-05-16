@@ -23,7 +23,7 @@ public partial class SoundManager : MonoBehaviour
 #region Bg sound
     public static void PlayMusicBg(SoundInfor sound)
     {
-        if(DataManager.ins.playerData.isMusic)
+        if(DataManager.ins.dt.isMusic)
         {
             ins.backgroundSound.clip = sound.Clip;
             ins.backgroundSound.volume = sound.Volume;
@@ -50,7 +50,7 @@ public partial class SoundManager : MonoBehaviour
 #region Efx sound
     public static void PlayEfxSound(SoundInfor sound)
     {
-        if(DataManager.ins.playerData.isSound)
+        if(DataManager.ins.dt.isSound)
         {
             ins.efxSound.clip = sound.Clip;
             ins.efxSound.loop = false;
@@ -67,7 +67,7 @@ public partial class SoundManager : MonoBehaviour
 
 public void ChangeSound(SoundInfor sound, float time)
     {
-        if (DataManager.ins.playerData.isMusic)
+        if (DataManager.ins.dt.isMusic)
         {
             float spacetime = time / 2;
 

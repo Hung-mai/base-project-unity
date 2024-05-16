@@ -12,7 +12,7 @@ public class DataManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     public bool isLoaded = false;
-    public PlayerData playerData;
+    public PlayerData dt;
     public const string PLAYER_DATA = "PLAYER_DATA";
 
 
@@ -24,11 +24,11 @@ public class DataManager : MonoBehaviour
         string d = PlayerPrefs.GetString(PLAYER_DATA, "");
         if (d != "")
         {
-            playerData = JsonUtility.FromJson<PlayerData>(d);
+            dt = JsonUtility.FromJson<PlayerData>(d);
         }
         else
         {
-            playerData = new PlayerData();
+            dt = new PlayerData();
         }
 
         //loadskin
@@ -42,7 +42,7 @@ public class DataManager : MonoBehaviour
     public void SaveData()
     {
         if (!isLoaded) return;
-        string json = JsonUtility.ToJson(playerData);
+        string json = JsonUtility.ToJson(dt);
         PlayerPrefs.SetString(PLAYER_DATA, json);
     }
 }
