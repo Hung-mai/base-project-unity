@@ -148,4 +148,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void BlockUI()
+    {
+        OpenUI(UIID.UICBlockRaycast);
+    }
+    public void UnBlockUI()
+    {
+        CloseUI(UIID.UICBlockRaycast);
+    }
+
+    public void CloseAllUI()
+    {
+        foreach (var canvas in UICanvas)
+        {
+            if (canvas.Value != null && canvas.Value.gameObject.activeInHierarchy)
+            {
+                canvas.Value.Close();
+            }
+        }
+    }
 }
